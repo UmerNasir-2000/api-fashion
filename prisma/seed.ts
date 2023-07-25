@@ -3,8 +3,6 @@ import axios from 'axios';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Hello from Seeder!!!');
-
   const slugs = [
     'ajjm-01',
     'ajjm-02',
