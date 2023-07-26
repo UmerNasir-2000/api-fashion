@@ -372,6 +372,41 @@ async function main() {
     'ajzb-23',
     'ajzb-24',
     'ajzb-25',
+    'ajwe-01',
+    'ajwe-02',
+    'ajwe-03',
+    'ajwe-04',
+    'ajwe-05',
+    'ajwe-06',
+    'ajwe-07',
+    'ajwe-08',
+    'ajwe-09',
+    'ajwe-10',
+    'ajwe-11',
+    'ajwe-12',
+    'ajwe-13',
+    'ajwe-14',
+    'ajwe-15',
+    'ajwe-16',
+    'ajwe-17',
+    'ajwe-18',
+    'ajwe-19',
+    'ajwe-20',
+    'ajae-01',
+    'ajae-02',
+    'ajae-03',
+    'ajae-04',
+    'ajae-05',
+    'ajae-06',
+    'ajae-07',
+    'ajae-08',
+    'ajae-09',
+    'ajae-10',
+  ];
+
+  const quantities = [
+    5, 10, 15, 20, 25, 28, 30, 31, 56, 89, 100, 200, 215, 223, 241, 243, 245,
+    248, 250,
   ];
 
   for (const slug of slugs) {
@@ -386,17 +421,27 @@ async function main() {
 
       if (product) continue;
 
+      const quantity = data.available
+        ? quantities[Math.floor(Math.random() * quantities.length)]
+        : 0;
+
+      const hasDiscount = Math.random() >= 0.5;
+
       await prisma.product.create({
         data: {
-          available: data.available,
+          inStock: data.available,
           vendor: data.vendor,
           price: data.price,
           slug: data.handle,
           title: data.title,
           description: data.description,
           images: data.images,
+          hasDiscount,
+          discountPercent: hasDiscount ? 10 : 0,
+          publishedAt: data.published_at,
           tags: data.tags,
           type: data.type,
+          quantity,
         },
       });
     } catch (error) {

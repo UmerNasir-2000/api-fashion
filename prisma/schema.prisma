@@ -8,18 +8,22 @@ datasource db {
 }
 
 model Product {
-  id          String   @id @default(uuid())
-  title       String   @unique @db.VarChar(50)
-  slug        String   @unique @db.VarChar(50)
-  vendor      String   @db.VarChar(100)
-  type        String   @db.VarChar(100)
-  description String   @db.Text
-  available   Boolean
-  price       Decimal  @db.Decimal(10, 2)
-  images      Json     @db.Json
-  tags        Json     @db.Json
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id              String   @id @default(uuid())
+  title           String   @unique @db.VarChar(50)
+  slug            String   @unique @db.VarChar(50)
+  vendor          String   @db.VarChar(100)
+  type            String   @db.VarChar(100)
+  description     String   @db.Text
+  inStock         Boolean  @map("in_stock")
+  hasDiscount     Boolean  @map("has_discount")
+  discountPercent Decimal  @map("discount_percent") @db.Decimal(10, 2)
+  quantity        Int
+  price           Decimal  @db.Decimal(10, 2)
+  images          Json     @db.Json
+  tags            Json     @db.Json
+  publishedAt     DateTime
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
 
   @@map("products")
 }
