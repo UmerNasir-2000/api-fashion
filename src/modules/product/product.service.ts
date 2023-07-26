@@ -12,4 +12,9 @@ export class ProductService {
   getProduct(id: string) {
     return this.repositoryService.getProduct(id);
   }
+
+  async getProductVendors(): Promise<string[]> {
+    const vendors = await this.repositoryService.getProductVendors();
+    return vendors.map(({ vendor }) => vendor);
+  }
 }
