@@ -1,9 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common';
 import { ProductService } from './product.service';
 
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
+
+  @Get(':id')
+  getProduct(@Param('id', ParseUUIDPipe) id: string) {
+    return this.productService.getProduct(id);
+  }
 
   @Get()
   getProducts() {

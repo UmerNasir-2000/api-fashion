@@ -8,4 +8,8 @@ export class RepositoryService {
   getProducts() {
     return this.db.product.findMany();
   }
+
+  getProduct(id: string) {
+    return this.db.product.findUniqueOrThrow({ where: { id } });
+  }
 }

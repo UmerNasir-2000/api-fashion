@@ -8,4 +8,8 @@ export class ProductService {
   getProducts() {
     return this.repositoryService.getProducts();
   }
+
+  getProduct(id: string) {
+    return this.repositoryService.getProduct(id);
+  }
 }
