@@ -25,10 +25,11 @@ export class ProductController {
 // TODO: Add the following to endpoints
 
 /**
+ *
  * 1. GET /product/ ✅ (Partially)
  * 2. GET /product/:id ✅
- * 3. GET /product/:slug
- * 4. GET /product/vendors
+ * 3. GET /product/:slug ✅
+ * 4. GET /product/vendors ✅
  * 5. GET /product/vendors/:id
  * 6. GET /product/vendors/:slug
  * 7. GET /product/fabric/

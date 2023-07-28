@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Product } from '@prisma/client';
+import { Product, Vendor } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -25,11 +25,7 @@ export class RepositoryService {
     });
   }
 
-  getProductVendors() {
-    return this.db.product.groupBy({
-      by: ['vendorId'],
-      take: 6,
-      orderBy: { vendorId: 'asc' },
-    });
+  getProductVendors(): Promise<Vendor[]> {
+    return this.db.vendor.findMany({ orderBy: { title: 'asc' } });
   }
 }

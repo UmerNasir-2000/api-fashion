@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Vendor } from '@prisma/client';
 import { RepositoryService } from './repository/repository.service';
 
 @Injectable()
@@ -13,8 +14,7 @@ export class ProductService {
     return this.repositoryService.getProduct(slug);
   }
 
-  async getProductVendors(): Promise<string[]> {
-    const vendors = await this.repositoryService.getProductVendors();
-    return [];
+  getProductVendors(): Promise<Vendor[]> {
+    return this.repositoryService.getProductVendors();
   }
 }
