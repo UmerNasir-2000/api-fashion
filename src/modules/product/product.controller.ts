@@ -29,7 +29,7 @@ export class ProductController {
  * 1. GET /product/ ✅ (Partially)
  * 2. GET /product/:id ✅
  * 3. GET /product/:slug ✅
- * 4. GET /product/vendors ✅
+ * 4. GET /product/vendors ✅ (Partially)
  * 5. GET /product/vendors/:id
  * 6. GET /product/vendors/:slug
  * 7. GET /product/fabric/

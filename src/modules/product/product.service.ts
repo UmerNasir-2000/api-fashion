@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { Vendor } from '@prisma/client';
+import { Product, Vendor } from '@prisma/client';
 import { RepositoryService } from './repository/repository.service';
 
 @Injectable()
 export class ProductService {
   constructor(private readonly repositoryService: RepositoryService) {}
 
-  getProducts() {
+  getProducts(): Promise<Product[]> {
     return this.repositoryService.getProducts();
   }
 
-  getProduct(slug: string) {
+  getProduct(slug: string): Promise<Product> {
     return this.repositoryService.getProduct(slug);
   }
 

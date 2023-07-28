@@ -26,6 +26,9 @@ export class RepositoryService {
   }
 
   getProductVendors(): Promise<Vendor[]> {
-    return this.db.vendor.findMany({ orderBy: { title: 'asc' } });
+    return this.db.vendor.findMany({
+      include: { products: { take: 10 } },
+      orderBy: { title: 'asc' },
+    });
   }
 }
