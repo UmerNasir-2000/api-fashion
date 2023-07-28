@@ -6,18 +6,22 @@ function getRandomProductSize() {
   let sizes = [
     {
       size: 'S',
+      label: 'Small',
       available: Math.random() >= 0.5,
     },
     {
       size: 'M',
+      label: 'Medium',
       available: Math.random() >= 0.5,
     },
     {
       size: 'L',
+      label: 'Large',
       available: Math.random() >= 0.5,
     },
     {
       size: 'XL',
+      label: 'Extra Large',
       available: Math.random() >= 0.5,
     },
   ];
@@ -690,6 +694,7 @@ async function main() {
           tags: data.tags,
           type: data.type,
           quantity,
+          isPopular: Math.random() >= 0.5,
           sizes: getRandomProductSize(),
         },
       });

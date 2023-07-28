@@ -35,6 +35,7 @@ model Product {
   images          Json     @db.Json
   tags            Json     @db.Json
   publishedAt     DateTime
+  isPopular       Boolean  @map("is_popular")
   sizes           Json     @db.Json
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime @updatedAt @map("updated_at")
