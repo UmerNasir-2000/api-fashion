@@ -7,11 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Vendor {
+  id            String   @id @default(uuid())
+  title         String   @unique
+  slug          String   @unique
+  featuredImage String
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  products Product[]
+
+  @@map("vendors")
+}
+
 model Product {
   id              String   @id @default(uuid())
   title           String   @unique @db.VarChar(50)
   slug            String   @unique @db.VarChar(50)
-  vendor          String   @db.VarChar(100)
+  vendorId        String   @map("vendor_id")
   type            String   @db.VarChar(100)
   description     String   @db.Text
   inStock         Boolean  @map("in_stock")
@@ -22,8 +35,10 @@ model Product {
   images          Json     @db.Json
   tags            Json     @db.Json
   publishedAt     DateTime
+  sizes           Json     @db.Json
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime @updatedAt @map("updated_at")
+  vendor          Vendor   @relation(fields: [vendorId], references: [id])
 
   @@map("products")
 }

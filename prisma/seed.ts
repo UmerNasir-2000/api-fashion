@@ -1,6 +1,34 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import axios from 'axios';
 const prisma = new PrismaClient();
+
+function getRandomProductSize() {
+  let sizes = [
+    {
+      size: 'S',
+      available: Math.random() >= 0.5,
+    },
+    {
+      size: 'M',
+      available: Math.random() >= 0.5,
+    },
+    {
+      size: 'L',
+      available: Math.random() >= 0.5,
+    },
+    {
+      size: 'XL',
+      available: Math.random() >= 0.5,
+    },
+  ];
+
+  const randomIndex = Math.floor(Math.random() * sizes.length);
+
+  if (Math.random() >= 0.5) sizes = sizes.splice(randomIndex, 1);
+  else sizes.pop();
+
+  return sizes;
+}
 
 async function main() {
   const slugs = [
@@ -402,6 +430,89 @@ async function main() {
     'ajae-08',
     'ajae-09',
     'ajae-10',
+    'ajim-01',
+    'ajim-02',
+    'ajim-03',
+    'ajim-04',
+    'ajim-05',
+    'ajim-06',
+    'ajim-07',
+    'ajim-08',
+    'ajim-09',
+    'ajim-10',
+    'ajim-11',
+    'ajim-12',
+    'ajim-13',
+    'ajim-14',
+    'ajim-15',
+    'ajim-16',
+    'ajim-17',
+    'ajim-18',
+    'ajim-19',
+    'ajst-01',
+    'ajst-02',
+    'ajst-03',
+    'ajst-04',
+    'ajst-05',
+    'ajst-06',
+    'ajst-07',
+    'ajst-08',
+    'ajst-09',
+    'ajst-10',
+    'ajst-11',
+    'ajst-12',
+    'ajst-13',
+    'ajst-14',
+    'ajst-15',
+    'ajst-16',
+    'ajle-01',
+    'ajle-02',
+    'ajle-03',
+    'ajle-04',
+    'ajle-05',
+    'ajle-06',
+    'ajle-07',
+    'ajle-08',
+    'ajle-09',
+    'ajle-10',
+    'ajle-11',
+    'ajle-12',
+    'ajle-13',
+    'ajle-14',
+    'ajle-15',
+    'ajle-16',
+    'ajle-17',
+    'ajle-18',
+    'ajle-19',
+    'ajle-20',
+    'ajle-21',
+    'ajle-22',
+    'ajle-23',
+    'ajmc-01',
+    'ajmc-02',
+    'ajmc-03',
+    'ajmc-04',
+    'ajmc-05',
+    'ajmc-06',
+    'ajmc-07',
+    'ajmc-08',
+    'ajmc-09',
+    'ajmc-10',
+    'ajp-01',
+    'ajp-02',
+    'ajp-03',
+    'ajp-04',
+    'ajp-05',
+    'ajp-06',
+    'ajp-07',
+    'ajp-08',
+    'ajp-09',
+    'ajp-10',
+    'ajp-11',
+    'ajp-12',
+    'ajp-13',
+    'ajp-14',
+    'ajp-15',
   ];
 
   const quantities = [
@@ -427,21 +538,24 @@ async function main() {
 
       const hasDiscount = Math.random() >= 0.5;
 
+      // TODO: Handle vendor
+
       await prisma.product.create({
         data: {
           inStock: data.available,
-          vendor: data.vendor,
-          price: data.price,
+          vendorId: data.vendor,
+          price: Math.round(data.price / 10),
           slug: data.handle,
           title: data.title,
           description: data.description,
           images: data.images,
           hasDiscount,
-          discountPercent: hasDiscount ? 10 : 0,
+          discountPercent: hasDiscount ? new Prisma.Decimal(10) : 0,
           publishedAt: data.published_at,
           tags: data.tags,
           type: data.type,
           quantity,
+          sizes: getRandomProductSize(),
         },
       });
     } catch (error) {
