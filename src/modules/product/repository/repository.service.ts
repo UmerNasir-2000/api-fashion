@@ -10,15 +10,26 @@ export class RepositoryService {
     return this.db.product.findMany();
   }
 
-  getProduct(id: string): Promise<Product> {
-    return this.db.product.findUniqueOrThrow({ where: { id } });
+  getProduct(slug: string): Promise<Product> {
+    return this.db.product.findFirstOrThrow({
+      where: {
+        OR: [
+          {
+            id: {
+              equals: slug,
+            },
+          },
+          { slug: { equals: slug } },
+        ],
+      },
+    });
   }
 
   getProductVendors() {
     return this.db.product.groupBy({
-      by: ['vendor'],
+      by: ['vendorId'],
       take: 6,
-      orderBy: { vendor: 'asc' },
+      orderBy: { vendorId: 'asc' },
     });
   }
 }

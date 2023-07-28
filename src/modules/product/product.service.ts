@@ -9,12 +9,12 @@ export class ProductService {
     return this.repositoryService.getProducts();
   }
 
-  getProduct(id: string) {
-    return this.repositoryService.getProduct(id);
+  getProduct(slug: string) {
+    return this.repositoryService.getProduct(slug);
   }
 
   async getProductVendors(): Promise<string[]> {
     const vendors = await this.repositoryService.getProductVendors();
-    return vendors.map(({ vendor }) => vendor);
+    return [];
   }
 }
