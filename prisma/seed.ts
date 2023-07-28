@@ -30,6 +30,27 @@ function getRandomProductSize() {
   return sizes;
 }
 
+async function handleVendor(
+  vendorTitle: string,
+  featuredImage: string,
+): Promise<string> {
+  let vendor = await prisma.vendor.findUnique({
+    where: { title: vendorTitle.trim() },
+  });
+
+  if (vendor) return vendor.id;
+
+  vendor = await prisma.vendor.create({
+    data: {
+      title: vendorTitle.trim(),
+      featuredImage,
+      slug: vendorTitle.trim().toLowerCase().replace(/\s+/g, '-'),
+    },
+  });
+
+  return vendor.id;
+}
+
 async function main() {
   const slugs = [
     'ajjm-01',
@@ -513,6 +534,120 @@ async function main() {
     'ajp-13',
     'ajp-14',
     'ajp-15',
+    'ajsm-01',
+    'ajsm-02',
+    'ajsm-03',
+    'ajsm-04',
+    'ajsm-05',
+    'ajsm-06',
+    'ajsm-07',
+    'ajsm-08',
+    'ajsm-09',
+    'ajsm-10',
+    'ajsm-11',
+    'ajsm-12',
+    'ajsm-13',
+    'ajsm-14',
+    'ajsm-15',
+    'ajsm-16',
+    'ajsm-17',
+    'ajsm-18',
+    'ajsm-19',
+    'ajsm-20',
+    'ajsm-21',
+    'ajsm-22',
+    'ajsm-23',
+    'ajsm-24',
+    'ajsm-25',
+    'ajsm-26',
+    'ajsm-27',
+    'ajsm-28',
+    'ajsm-29',
+    'ajsm-30',
+    'ajsm-31',
+    'ajsm-32',
+    'ajsm-33',
+    'ajsm-34',
+    'ajsm-35',
+    'ajsm-36',
+    'ajsm-37',
+    'ajsm-38',
+    'ajsm-39',
+    'ajsm-40',
+    'ajsm-41',
+    'ajsm-42',
+    'ajsm-43',
+    'ajsm-44',
+    'ajsm-45',
+    'ajsm-46',
+    'ajsm-47',
+    'ajtf-01',
+    'ajtf-02',
+    'ajtf-03',
+    'ajtf-04',
+    'ajtf-05',
+    'ajtf-06',
+    'ajtf-07',
+    'ajtf-08',
+    'ajtf-09',
+    'ajtf-10',
+    'ajpr-01',
+    'ajpr-02',
+    'ajpr-03',
+    'ajpr-04',
+    'ajpr-05',
+    'ajpr-06',
+    'ajpr-07',
+    'ajck-01',
+    'ajck-02',
+    'ajck-03',
+    'ajck-04',
+    'ajck-05',
+    'ajck-06',
+    'ajck-07',
+    'ajck-08',
+    'ajck-09',
+    'ajck-10',
+    'ajck-11',
+    'ajsl-01',
+    'ajsl-02',
+    'ajsl-03',
+    'ajsl-04',
+    'ajsl-05',
+    'ajsl-06',
+    'ajsl-07',
+    'ajsl-08',
+    'ajsl-09',
+    'ajsl-10',
+    'ajsl-11',
+    'ajsl-12',
+    'ajsl-13',
+    'ajsl-14',
+    'ajsl-15',
+    'ajsl-16',
+    'ajsl-17',
+    'ajsl-18',
+    'ajsl-19',
+    'ajrl-01',
+    'ajrl-02',
+    'ajrl-03',
+    'ajrl-04',
+    'ajrl-05',
+    'ajrl-06',
+    'ajrl-07',
+    'ajrl-08',
+    'ajrl-09',
+    'ajrl-10',
+    'ajrl-11',
+    'ajrl-12',
+    'ajrl-13',
+    'ajrl-14',
+    'ajrl-15',
+    'ajrl-16',
+    'ajrl-17',
+    'ajrl-18',
+    'ajrl-19',
+    'ajrl-20',
   ];
 
   const quantities = [
@@ -526,6 +661,8 @@ async function main() {
         `https://asimjofa.com/products/${slug}.js`,
       );
 
+      const vendorId = await handleVendor(data.vendor, data.featured_image);
+
       const product = await prisma.product.findUnique({
         where: { title: data.title },
       });
@@ -538,12 +675,10 @@ async function main() {
 
       const hasDiscount = Math.random() >= 0.5;
 
-      // TODO: Handle vendor
-
       await prisma.product.create({
         data: {
           inStock: data.available,
-          vendorId: data.vendor,
+          vendorId,
           price: Math.round(data.price / 10),
           slug: data.handle,
           title: data.title,
@@ -559,7 +694,7 @@ async function main() {
         },
       });
     } catch (error) {
-      console.log(`Not found slug with id = ${slug}`);
+      console.log(`No product found with slug = ${slug}`);
       continue;
     }
   }

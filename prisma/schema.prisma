@@ -11,7 +11,7 @@ model Vendor {
   id            String   @id @default(uuid())
   title         String   @unique
   slug          String   @unique
-  featuredImage String
+  featuredImage String   @map("featured_image")
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
 
