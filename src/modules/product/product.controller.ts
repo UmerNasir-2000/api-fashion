@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common';
 import ValidateSlugPipe from 'src/pipes/slug.pipe';
 import { ProductService } from './product.service';
 
@@ -16,6 +16,11 @@ export class ProductController {
     return this.productService.getProduct(slug);
   }
 
+  @Get('vendor/:id')
+  getProductsByVendor(@Param('id', ParseUUIDPipe) id: string) {
+    return this.productService.getProductsByVendor(id);
+  }
+
   @Get()
   getProducts() {
     return this.productService.getProducts();
@@ -29,9 +34,9 @@ export class ProductController {
  * 1. GET /product/ ✅ (Partially)
  * 2. GET /product/:id ✅
  * 3. GET /product/:slug ✅
- * 4. GET /product/vendors ✅ (Partially)
- * 5. GET /product/vendors/:id
- * 6. GET /product/vendors/:slug
+ * 4. GET /product/vendors ✅
+ * 5. GET /product/vendors/:id ✅
+ * 6. GET /product/vendors/:slug ✅
  * 7. GET /product/fabric/
  * 8. GET /product/fabric/:slug
  *

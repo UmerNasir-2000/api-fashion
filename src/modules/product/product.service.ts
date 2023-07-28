@@ -14,6 +14,10 @@ export class ProductService {
     return this.repositoryService.getProduct(slug);
   }
 
+  getProductsByVendor(vendorId: string): Promise<Product[]> {
+    return this.repositoryService.getProductsByVendor(vendorId);
+  }
+
   getProductVendors(): Promise<Vendor[]> {
     return this.repositoryService.getProductVendors();
   }

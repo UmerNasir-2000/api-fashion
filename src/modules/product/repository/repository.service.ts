@@ -31,4 +31,11 @@ export class RepositoryService {
       orderBy: { title: 'asc' },
     });
   }
+
+  getProductsByVendor(vendorId: string): Promise<Product[]> {
+    return this.db.product.findMany({
+      where: { vendorId },
+      orderBy: { title: 'asc' },
+    });
+  }
 }
