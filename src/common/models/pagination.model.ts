@@ -4,9 +4,9 @@ class PaginationModel<T> {
   readonly pages: number;
 
   constructor(data: PaginationModel<T>) {
-    this.records = data.records;
     this.count = data.count;
     this.pages = data.pages;
+    this.records = data.records;
   }
 }
 
