@@ -18,9 +18,20 @@ async function bootstrap() {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   });
 
-  // TODO: Further configure these middlewares
-  app.use(compression());
-  app.use(helmet());
+  app.use(compression({ threshold: 10, chunkSize: 16 * 1024, level: 6 }));
+  app.use(
+    helmet({
+      contentSecurityPolicy: { useDefaults: true },
+      dnsPrefetchControl: false,
+      hidePoweredBy: true,
+      frameguard: { action: 'sameorigin' },
+      hsts: { maxAge: 31536000, includeSubDomains: true },
+      ieNoOpen: true,
+      noSniff: true,
+      xssFilter: true,
+      referrerPolicy: { policy: 'no-referrer' },
+    }),
+  );
 
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
