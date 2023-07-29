@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import * as compression from 'compression';
 import helmet from 'helmet';
@@ -30,6 +31,12 @@ async function bootstrap() {
       noSniff: true,
       xssFilter: true,
       referrerPolicy: { policy: 'no-referrer' },
+    }),
+  );
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      forbidNonWhitelisted: true,
     }),
   );
 

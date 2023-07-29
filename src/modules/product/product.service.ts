@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Product, Vendor } from '@prisma/client';
+import ProductPreviewModel from './models/product.preview.model';
 import { RepositoryService } from './repository/repository.service';
 
 @Injectable()
@@ -10,8 +11,9 @@ export class ProductService {
     return this.repositoryService.getProducts();
   }
 
-  getProduct(slug: string): Promise<Product> {
-    return this.repositoryService.getProduct(slug);
+  async getProduct(slug: string): Promise<ProductPreviewModel> {
+    const product = await this.repositoryService.getProduct(slug);
+    return new ProductPreviewModel(product);
   }
 
   getProductsByVendor(vendorId: string): Promise<Product[]> {
