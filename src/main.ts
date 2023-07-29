@@ -1,4 +1,5 @@
 import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import * as compression from 'compression';
 import helmet from 'helmet';
@@ -37,12 +38,17 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       forbidNonWhitelisted: true,
+      transform: true,
+      transformOptions: { enableImplicitConversion: true },
     }),
   );
 
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
 
-  await app.listen(3000);
+  const config = app.get<ConfigService>(ConfigService);
+  const port = config.get<number>('PORT') || 3000;
+
+  await app.listen(port);
 }
 bootstrap();
